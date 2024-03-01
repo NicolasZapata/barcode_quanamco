@@ -1,4 +1,5 @@
 from odoo import _, api, fields, models
+import random
 
 
 class ProductProduct(models.Model):
@@ -8,6 +9,11 @@ class ProductProduct(models.Model):
         "Product Class Code",
         tracking=True,
         related="product_class_id.code",
+    )
+    default_code = fields.Char(
+        "Internal Reference",
+        index=True,
+        default=lambda self: 45 + random.randint(00, 99),
     )
     categ_code = fields.Char(
         "Category Code",
@@ -22,7 +28,7 @@ class ProductProduct(models.Model):
     barcode = fields.Char(
         "Barcode",
         copy=False,
-        # index="btree_not_null",
+        index="btree_not_null",
         compute="_auto_complete_barcode",
         help="International Article Number used for product identification.",
     )
@@ -38,15 +44,15 @@ class ProductProduct(models.Model):
         | Categoría | Clase de Código | Marca | Material | Consecutivo |
         """
         for record in self:
-          qr_code = []
-          if record.categ_code:
-              qr_code.append(record.categ_code)
-          if record.product_class_code:
-              qr_code.append(record.product_class_code)
-          if record.product_brand_id:
-              qr_code.append(record.product_brand_id.code)
-          if record.product_material_id:
-              qr_code.append(record.product_material_id.code)
-          if record.default_code:
-              qr_code.append(record.default_code)
-          record.barcode = "".join(qr_code)
+            qr_code = []
+            if record.categ_code:
+                qr_code.append(record.categ_code)
+            if record.product_class_code:
+                qr_code.append(record.product_class_code)
+            if record.product_brand_id:
+                qr_code.append(record.product_brand_id.code)
+            if record.product_material_id:
+                qr_code.append(record.product_material_id.code)
+            if record.default_code:
+                qr_code.append(record.default_code)
+            record.barcode = "".join(qr_code)
