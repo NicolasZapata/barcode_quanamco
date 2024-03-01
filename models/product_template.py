@@ -8,9 +8,12 @@ class ProductTemplate(models.Model):
 
     category_code = fields.Char("Category Code", related="categ_id.code", tracking=True)
     product_class_id = fields.Many2one(
-        "product.class", string="Product Class", tracking=True,
-        domain=lambda self: [(self.product_class_id, 'in', self.categ_id.id)]
+        "product.class",
+        string="Product Class",
+        tracking=True,
     )
     product_class_code = fields.Char(
-        "Product CLass Code", related="product_class_id.code", tracking=True,
+        "Product CLass Code",
+        related="product_class_id.code",
+        tracking=True,
     )

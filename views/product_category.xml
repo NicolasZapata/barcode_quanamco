@@ -17,7 +17,6 @@
             <tree editable="bottom">
               <field name="name" />
               <field name="code" />
-              <field name="product_category_id" />
             </tree>
           </field>
         </xpath>

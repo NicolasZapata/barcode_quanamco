@@ -1,12 +1,52 @@
 from odoo import _, api, fields, models
 
+
 class ProductProduct(models.Model):
-  _inherit = 'product.product'
-  _description = 'Product Product'
-  
-  code = fields.Char("Code", tracking=True, related="product_class_ids.code")
-  categ_code = fields.Char('Category Code', related="categ_id.code")
-  product_class_ids = fields.Many2one(
-    "product.class", string="Product Class",
-    tracking=True,
-  )
+    _inherit = "product.product"
+
+    product_class_code = fields.Char(
+        "Product Class Code",
+        tracking=True,
+        related="product_class_id.code",
+    )
+    categ_code = fields.Char(
+        "Category Code",
+        related="categ_id.code",
+    )
+    product_class_id = fields.Many2one(
+        "product.class",
+        string="Product Class",
+    )
+    brand_code = fields.Char(string="Brand", related="product_brand_id.code")
+    material_code = fields.Char(string="Material", related="product_material_id.code")
+    barcode = fields.Char(
+        "Barcode",
+        copy=False,
+        # index="btree_not_null",
+        compute="_auto_complete_barcode",
+        help="International Article Number used for product identification.",
+    )
+
+    # Conformación del código de barras
+    def _auto_complete_barcode(self):
+        """
+        Código 1: Category Code
+        Código 2: Class Code
+        Código 3: La Marca
+        Código 4: Material
+        por ende
+        | Categoría | Clase de Código | Marca | Material | Consecutivo |
+        """
+        for record in self:
+          qr_code = []
+          if record.categ_code:
+              qr_code.append(record.categ_code)
+          if record.product_class_code:
+              qr_code.append(record.product_class_code)
+          if record.product_brand_id:
+              qr_code.append(record.product_brand_id.code)
+          if record.product_material_id:
+              qr_code.append(record.product_material_id.code)
+          if record.default_code:
+              qr_code.append(record.default_code)
+          record.barcode = "".join(qr_code)

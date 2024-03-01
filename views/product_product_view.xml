@@ -8,9 +8,10 @@
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_normal_form_view" />
       <field name="arch" type="xml">
-        <xpath expr="//field[@name='barcode']" position="after">
-          <field name="code" />
-          <field name="product_class_ids" />
+        <xpath expr="//field[@name='barcode']" position="replace">
+          <field name="barcode" />
+          <field name="product_class_code" />
+          <field name="product_class_id" />
         </xpath>
         <xpath expr="//field[@name='categ_id']" position="after">
           <field name="categ_code" />
