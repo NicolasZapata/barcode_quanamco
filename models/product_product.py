@@ -47,12 +47,26 @@ class ProductProduct(models.Model):
             qr_code = []
             if record.categ_code:
                 qr_code.append(record.categ_code)
+            elif record.categ_code == '':
+                qr_code.append('00')
+
             if record.product_class_code:
                 qr_code.append(record.product_class_code)
+            elif record.product_class_code == '':
+                qr_code.append('00')
+
             if record.product_brand_id:
                 qr_code.append(record.product_brand_id.code)
+            elif not record.product_brand_id.code:
+                qr_code.append('00')
+
             if record.product_material_id:
                 qr_code.append(record.product_material_id.code)
+            elif not record.product_material_id:
+                qr_code.append('00')
+
             if record.default_code:
                 qr_code.append(record.default_code)
+            elif not record.default_code:
+                qr_code.append('0000')
             record.barcode = "".join(qr_code)
