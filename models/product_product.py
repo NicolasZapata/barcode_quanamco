@@ -4,7 +4,9 @@ import random
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
+    _order = "barcode desc"
 
+    product_reference_id = fields.Many2one('product.reference', string='Product Reference')
     product_class_code = fields.Char(
         "Product Class Code",
         tracking=True,
@@ -13,8 +15,12 @@ class ProductProduct(models.Model):
     default_code = fields.Char(
         "Internal Reference",
         index=True,
-        default=lambda self: 45 + random.randint(00, 99),
+        # default=lambda self: 45,
+        default=45,
+        related="product_reference_id.code",
+        store=True,
     )
+    sequency = fields.Char("Sec", default=lambda self: random.randint(00, 99))
     categ_code = fields.Char(
         "Category Code",
         related="categ_id.code",
@@ -27,47 +33,61 @@ class ProductProduct(models.Model):
     material_code = fields.Char(string="Material", related="product_material_id.code")
     barcode = fields.Char(
         "Barcode",
-        copy=False,
-        store=True,
-        index="btree_not_null",
+        # copy=False,
         compute="_auto_complete_barcode",
+        # index="btree_not_null",
         help="International Article Number used for product identification.",
+        store=True,
     )
 
     # Conformación del código de barras
+    @api.depends(
+        "categ_code",
+        "product_class_code",
+        "product_brand_id",
+        "product_material_id",
+        "default_code",
+        "sequency",
+        'barcode',
+    )
     def _auto_complete_barcode(self):
         """
-        Código 1: Category Code
-        Código 2: Class Code
-        Código 3: La Marca
-        Código 4: Material
-        por ende
-        | Categoría | Clase de Código | Marca | Material | Consecutivo |
+        Categoria(2) + Clase(2) + material(2) + Marca(3) + Referencia(2) + secuencia(2)
+        99 + 99 + 99 + 999 +99
+        Ejemplo:
+        45+02+02+123+01+01
+        45+02+00+000+01+02
+        45+02+01+045+00+03
+        45+02+01+045+12+04
         """
         for record in self:
             qr_code = []
             if record.categ_code:
                 qr_code.append(record.categ_code)
-            elif record.categ_code == '':
-                qr_code.append('00')
+            elif not record.categ_code:
+                qr_code.append("00")
 
             if record.product_class_code:
                 qr_code.append(record.product_class_code)
-            elif record.product_class_code == '':
-                qr_code.append('00')
+            elif not record.product_class_code:
+                qr_code.append("00")
 
             if record.product_brand_id:
                 qr_code.append(record.product_brand_id.code)
             elif not record.product_brand_id.code:
-                qr_code.append('00')
+                qr_code.append("00")
 
             if record.product_material_id:
                 qr_code.append(record.product_material_id.code)
             elif not record.product_material_id:
-                qr_code.append('00')
+                qr_code.append("00")
 
             if record.default_code:
                 qr_code.append(record.default_code)
             elif not record.default_code:
-                qr_code.append('0000')
+                qr_code.append("00")
+
+            if record.sequency:
+                qr_code.append(record.sequency)
+
             record.barcode = "".join(qr_code)
