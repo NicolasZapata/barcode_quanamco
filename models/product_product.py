@@ -28,6 +28,7 @@ class ProductProduct(models.Model):
     barcode = fields.Char(
         "Barcode",
         copy=False,
+        store=True,
         index="btree_not_null",
         compute="_auto_complete_barcode",
         help="International Article Number used for product identification.",
