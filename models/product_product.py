@@ -6,7 +6,11 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
     _order = "barcode desc"
 
-    product_reference_id = fields.Many2one('product.reference', string='Product Reference')
+    product_reference_id = fields.Many2one(
+        "product.reference",
+        string="Product Reference",
+        tracking=True,
+    )
     product_class_code = fields.Char(
         "Product Class Code",
         tracking=True,
@@ -17,10 +21,9 @@ class ProductProduct(models.Model):
         index=True,
         # default=lambda self: 45,
         default=45,
-        related="product_reference_id.code",
         store=True,
     )
-    sequency = fields.Char("Sec", default=lambda self: random.randint(00, 99))
+    sequency = fields.Char("Sequency", default=lambda self: random.randint(00, 99))
     categ_code = fields.Char(
         "Category Code",
         related="categ_id.code",
@@ -48,12 +51,14 @@ class ProductProduct(models.Model):
         "product_material_id",
         "default_code",
         "sequency",
-        'barcode',
+        "barcode",
     )
     def _auto_complete_barcode(self):
         """
-        Categoria(2) + Clase(2) + material(2) + Marca(3) + Referencia(2) + secuencia(2)
-        99 + 99 + 99 + 999 +99
+        Categoria(2) + Clase(2) + material(2) + Marca(3) + Referencia de producto(2) + secuencia(2)
+
+             99      +  99      +     99      +    999   +             99            +     99
+
         Ejemplo:
         45+02+02+123+01+01
         45+02+00+000+01+02
