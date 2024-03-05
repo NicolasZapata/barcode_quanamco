@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="product_product_sequence" model="ir.sequence">
+    <field name="name">Product Sequence</field>
+    <field name="code">product.product.sequence</field>
+    <field name="padding">2</field>
+  </record>
+
+</odoo>

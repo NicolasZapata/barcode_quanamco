@@ -11,7 +11,13 @@ class ProductProduct(models.Model):
         tracking=True,
     )
     product_reference_code = fields.Char('Product Reference Code', related='product_reference_id.code')
+    sequency = fields.Char("Sequency", )
  
+    @api.model
+    def create(self, vals):
+        sequence = self.env['ir.sequence'].next_by_code('product.product.sequence')
+        vals['sequency'] = sequence
+        return super(ProductProduct, self).create(vals)
 
     # Conformación del código de barras
     @api.depends(
