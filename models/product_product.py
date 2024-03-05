@@ -10,13 +10,24 @@ class ProductProduct(models.Model):
         string="Product Reference",
         tracking=True,
     )
-    product_reference_code = fields.Char('Product Reference Code', related='product_reference_id.code')
-    sequency = fields.Char("Sequency", )
- 
+    product_reference_code = fields.Char(
+        "Product Reference Code", related="product_reference_id.code"
+    )
+    sequency = fields.Char(
+        "Sequency",
+    )
+
+    # TODO: Por defecto, dentro del código de barras la secuencia no aparece hasta que se guarde el formulario
+    # La tarea será buscar una forma en que se pueda actualizar automáticamente la secuencia.
     @api.model
     def create(self, vals):
-        sequence = self.env['ir.sequence'].next_by_code('product.product.sequence')
-        vals['sequency'] = sequence
+        """
+        Al guardarse:
+            . . . . .  secuencia
+            00000000022-> 02 <-
+        """
+        sequence = self.env["ir.sequence"].next_by_code("product.product.sequence")
+        vals["sequency"] = sequence
         return super(ProductProduct, self).create(vals)
 
     # Conformación del código de barras
@@ -33,42 +44,58 @@ class ProductProduct(models.Model):
         """
         Categoria(2) + Clase(2) + material(2) + Marca(3) + Referencia de producto(2) + secuencia(2)
 
-             99      +  99      +     99      +    999   +             99            +     99
+            99      +  99      +     99      +    999   +             99            +     99
 
         Ejemplo:
             45+02+02+123+01+01
             45+02+00+000+01+02
             45+02+01+045+00+03
             45+02+01+045+12+04
+
+        Auto-generates a barcode based on various fields.
+
+        This method constructs a QR code by concatenating values from different fields
+        (such as `categ_code`, `product_class_code`, etc.) and assigns the resulting
+        barcode to the `barcode` field of the current record.
+
+        :return: None
         """
         for record in self:
             qr_code = []
+            
+            # Add category code or default "00"
             if record.categ_code:
                 qr_code.append(record.categ_code)
             elif not record.categ_code:
                 qr_code.append("00")
 
+            # Add product class code or default "00"
             if record.product_class_code:
                 qr_code.append(record.product_class_code)
             elif not record.product_class_code:
                 qr_code.append("00")
 
+            # Add product brand code or default "000"
             if record.product_brand_id:
                 qr_code.append(record.product_brand_id.code)
             elif not record.product_brand_id.code:
                 qr_code.append("000")
-
+                
+            # Add product material code or default "00"
             if record.product_material_id:
                 qr_code.append(record.product_material_id.code)
             elif not record.product_material_id:
                 qr_code.append("00")
 
+            # Add product reference code or default "00"
             if record.product_reference_code:
                 qr_code.append(record.product_reference_code)
             elif not record.product_reference_code:
                 qr_code.append("00")
 
+            # Add custom sequence (if available)
             if record.sequency:
                 qr_code.append(record.sequency)
 
+            # Join all components to form the final barcode
             record.barcode = "".join(qr_code)
