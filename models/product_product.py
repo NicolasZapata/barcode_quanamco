@@ -34,8 +34,8 @@ class ProductProduct(models.Model):
     @api.depends(
         "categ_code",
         "product_class_code",
-        "product_brand_id",
-        "product_material_id",
+        "product_brand_code",
+        "product_material_code",
         "product_reference_code",
         "sequency",
         "barcode",
@@ -77,13 +77,13 @@ class ProductProduct(models.Model):
 
             # Add product brand code or default "000"
             if record.product_brand_id:
-                qr_code.append(record.product_brand_id.code)
+                qr_code.append(record.product_brand_code)
             elif not record.product_brand_id.code:
                 qr_code.append("000")
                 
             # Add product material code or default "00"
             if record.product_material_id:
-                qr_code.append(record.product_material_id.code)
+                qr_code.append(record.product_material_code)
             elif not record.product_material_id:
                 qr_code.append("00")
 
