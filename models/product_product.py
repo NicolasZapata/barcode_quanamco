@@ -15,6 +15,7 @@ class ProductProduct(models.Model):
     )
     sequency = fields.Char(
         "Sequency",
+        select=True,
     )
 
     # TODO: Por defecto, dentro del código de barras la secuencia no aparece hasta que se guarde el formulario
@@ -25,9 +26,14 @@ class ProductProduct(models.Model):
         Al guardarse:
             . . . . .  secuencia
             00000000022-> 02 <-
+            00000000022-> 03 <-
+            00000000022-> 04 <-
+            . . . . . . . . . .
+            00000000022-> n1n2 <-
         """
-        sequence = self.env["ir.sequence"].next_by_code("product.product.sequence")
-        vals["sequency"] = sequence
+        vals["sequency"] = self.env["ir.sequence"].next_by_code(
+            "product.product.sequence"
+        )
         return super(ProductProduct, self).create(vals)
 
     # Conformación del código de barras
@@ -62,7 +68,7 @@ class ProductProduct(models.Model):
         """
         for record in self:
             qr_code = []
-            
+
             # Add category code or default "00"
             if record.categ_code:
                 qr_code.append(record.categ_code)
@@ -80,7 +86,7 @@ class ProductProduct(models.Model):
                 qr_code.append(record.product_brand_code)
             elif not record.product_brand_id.code:
                 qr_code.append("000")
-                
+
             # Add product material code or default "00"
             if record.product_material_id:
                 qr_code.append(record.product_material_code)
@@ -96,6 +102,8 @@ class ProductProduct(models.Model):
             # Add custom sequence (if available)
             if record.sequency:
                 qr_code.append(record.sequency)
+            elif not record.sequency:
+                qr_code.append("00")
 
             # Join all components to form the final barcode
             record.barcode = "".join(qr_code)
