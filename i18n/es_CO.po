@@ -28,7 +28,7 @@ msgstr "Categoría del Producto"
 #. module: barcode_quanamco
 #: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
 msgid "Product Class"
-msgstr "Clase del Product"
+msgstr "Clase del Producto"
 
 #. module: barcode_quanamco
 #: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
