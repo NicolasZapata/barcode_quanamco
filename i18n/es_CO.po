@@ -18,45 +18,45 @@ msgstr ""
 #. module: barcode_quanamco
 #: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
 msgid "Internal Reference"
-msgstr ""
+msgstr "Referencia Interna"
 
 #. module: barcode_quanamco
 #: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
 msgid "Product Category"
-msgstr ""
+msgstr "Categoría del Producto"
 
 #. module: barcode_quanamco
 #: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
 msgid "Product Class"
-msgstr ""
+msgstr "Clase del Product"
 
 #. module: barcode_quanamco
 #: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
 msgid "Product Information"
-msgstr ""
+msgstr "Información del Producto"
 
 #. module: barcode_quanamco
 #: model:ir.model.fields,field_description:barcode_quanamco.field_product_product__product_reference_id
 #: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
 msgid "Product Reference"
-msgstr ""
+msgstr "Referencia del Producto"
 
 #. module: barcode_quanamco
 #: model:ir.model.fields,field_description:barcode_quanamco.field_product_product__product_reference_code
 msgid "Product Reference Code"
-msgstr ""
+msgstr "Código de Referencia del Producto"
 
 #. module: barcode_quanamco
 #: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
 msgid "Product References"
-msgstr ""
+msgstr "Referencias del Producto"
 
 #. module: barcode_quanamco
 #: model:ir.model,name:barcode_quanamco.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante del Producto"
 
 #. module: barcode_quanamco
 #: model:ir.model.fields,field_description:barcode_quanamco.field_product_product__sequency
 msgid "Sequency"
-msgstr ""
+msgstr "Secuencia"
