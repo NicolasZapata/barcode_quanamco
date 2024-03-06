@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* barcode_quanamco
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0-20231120\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-06 22:14+0000\n"
+"PO-Revision-Date: 2024-03-06 22:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: barcode_quanamco
+#: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
+msgid "Internal Reference"
+msgstr ""
+
+#. module: barcode_quanamco
+#: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
+msgid "Product Category"
+msgstr ""
+
+#. module: barcode_quanamco
+#: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
+msgid "Product Class"
+msgstr ""
+
+#. module: barcode_quanamco
+#: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
+msgid "Product Information"
+msgstr ""
+
+#. module: barcode_quanamco
+#: model:ir.model.fields,field_description:barcode_quanamco.field_product_product__product_reference_id
+#: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
+msgid "Product Reference"
+msgstr ""
+
+#. module: barcode_quanamco
+#: model:ir.model.fields,field_description:barcode_quanamco.field_product_product__product_reference_code
+msgid "Product Reference Code"
+msgstr ""
+
+#. module: barcode_quanamco
+#: model_terms:ir.ui.view,arch_db:barcode_quanamco.product_normal_form_view_inherit_product
+msgid "Product References"
+msgstr ""
+
+#. module: barcode_quanamco
+#: model:ir.model,name:barcode_quanamco.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: barcode_quanamco
+#: model:ir.model.fields,field_description:barcode_quanamco.field_product_product__sequency
+msgid "Sequency"
+msgstr ""
