@@ -79,7 +79,7 @@ class ProductProduct(models.Model):
             if record.product_class_code:
                 qr_code.append(record.product_class_code)
             elif not record.product_class_code:
-                qr_code.append("00")
+                qr_code.append('')
 
             # Add product brand code or default "000"
             if record.product_brand_id:
