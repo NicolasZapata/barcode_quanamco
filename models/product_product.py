@@ -17,9 +17,15 @@ class ProductProduct(models.Model):
         "Sequency",
         select=True,
     )
+    barcode = fields.Char(
+        "Barcode",
+        # copy=False,
+        compute="_auto_complete_barcode",
+        # index="btree_not_null",
+        help="International Article Number used for product identification.",
+        store=True,
+    )
 
-    # TODO: Por defecto, dentro del código de barras la secuencia no aparece hasta que se guarde el formulario
-    # La tarea será buscar una forma en que se pueda actualizar automáticamente la secuencia.
     @api.model
     def create(self, vals):
         """
