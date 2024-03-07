@@ -3,7 +3,7 @@ from odoo import _, api, fields, models
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
-    _order = "barcode desc"
+    _order = "sequency"
 
     product_reference_id = fields.Many2one(
         "product.reference",
@@ -15,7 +15,7 @@ class ProductProduct(models.Model):
     )
     sequency = fields.Integer(
         "sequency",
-        required=False
+        required=False,
     )
 
     barcode = fields.Char(
@@ -41,6 +41,7 @@ class ProductProduct(models.Model):
             . . . . . . . . . .
             00000000022-> n1n2 <-
         """
+
     # Conformación del código de barras
     @api.depends(
         "categ_code",
@@ -84,7 +85,7 @@ class ProductProduct(models.Model):
             if record.product_class_code:
                 qr_code.append(record.product_class_code)
             elif not record.product_class_code:
-                qr_code.append('')
+                qr_code.append("")
 
             # Add product brand code or default "000"
             if record.product_brand_id:
@@ -108,9 +109,9 @@ class ProductProduct(models.Model):
             if record.sequency:
                 qr_code.append(record.sequency)
             else:
-                qr_code.append(self.env["ir.sequence"].next_by_code(
-            "product.product.sequence"
-        ))
+                qr_code.append(
+                    self.env["ir.sequence"].next_by_code("product.product.sequence")
+                )
 
             # Join all components to form the final barcode
             record.barcode = "".join(qr_code)
