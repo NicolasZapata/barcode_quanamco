@@ -13,19 +13,23 @@ class ProductProduct(models.Model):
     product_reference_code = fields.Char(
         "Product Reference Code", related="product_reference_id.code"
     )
-    sequency = fields.Char(
-        "Sequency",
-        select=True,
+    sequency = fields.Integer(
+        "sequency",
+        required=False
     )
+
     barcode = fields.Char(
         "Barcode",
         # copy=False,
         compute="_auto_complete_barcode",
+        readonly=False,
         # index="btree_not_null",
         help="International Article Number used for product identification.",
         store=True,
     )
 
+    # TODO: Por defecto, dentro del código de barras la secuencia no aparece hasta que se guarde el formulario
+    # La tarea será buscar una forma en que se pueda actualizar automáticamente la secuencia.
     @api.model
     def create(self, vals):
         """
@@ -37,11 +41,6 @@ class ProductProduct(models.Model):
             . . . . . . . . . .
             00000000022-> n1n2 <-
         """
-        vals["sequency"] = self.env["ir.sequence"].next_by_code(
-            "product.product.sequence"
-        )
-        return super(ProductProduct, self).create(vals)
-
     # Conformación del código de barras
     @api.depends(
         "categ_code",
@@ -108,8 +107,10 @@ class ProductProduct(models.Model):
             # Add custom sequence (if available)
             if record.sequency:
                 qr_code.append(record.sequency)
-            elif not record.sequency:
-                qr_code.append("00")
+            else:
+                qr_code.append(self.env["ir.sequence"].next_by_code(
+            "product.product.sequence"
+        ))
 
             # Join all components to form the final barcode
             record.barcode = "".join(qr_code)

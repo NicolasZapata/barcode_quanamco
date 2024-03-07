@@ -19,7 +19,6 @@
     'views/product_product_view.xml',
   ],
   'demo': [
-    ''
   ],
   'auto_install': False,
   'application': False,

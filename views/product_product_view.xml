@@ -8,29 +8,14 @@
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_normal_form_view" />
       <field name="arch" type="xml">
-        <xpath expr="//field[@name='barcode']" position="replace"/>
-        <xpath expr="//field[@name='categ_id']" position="replace"/>
-        <xpath expr="//field[@name='default_code']" position="replace"/>
-        <xpath expr="//page/group[@name='brand_material']" position="after">
-          <group name="product_information" string="Product Information">
-            <group name="product_class" string="Product Class">
-              <field name="product_class_id" />
-              <field name="product_class_code" />
-            </group>
-            <group name="product_category" string="Product Category">
-              <field name="categ_id" />
-              <field name="categ_code" />
-            </group>
-          </group>
-          <group name="product_references" string="Product References">
-            <group name="product_reference" string="Product Reference">
-              <field name="product_reference_id" />
-              <field name="product_reference_code" />
-            </group>
-            <group name="internal_reference" string="Internal Reference">
-              <field name="default_code" />
-            </group>
-          </group>
+        <xpath expr="//field[@name='barcode']" position="after">
+         <field name="product_class_code" />
+          <field name="product_class_id" />
+        </xpath>
+        <xpath expr="//field[@name='categ_id']" position="after">
+          <field name="categ_code" />
+          <field name="product_reference_id"/>
+          <field name="product_reference_code"/>
         </xpath>
       </field>
     </record>
