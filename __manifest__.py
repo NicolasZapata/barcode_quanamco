@@ -16,7 +16,6 @@
   'data': [
     'security/ir.model.access.csv',
     'data/sequence.xml',
-    'views/product_product_view.xml',
   ],
   'demo': [
   ],

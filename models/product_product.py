@@ -13,14 +13,6 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
     _order = "sequency"
 
-    product_reference_id = fields.Many2one(
-        "product.reference",
-        string="Product Reference",
-        tracking=True,
-    )
-    product_reference_code = fields.Char(
-        "Product Reference Code", related="product_reference_id.code"
-    )
     sequency = fields.Integer(
         "Sequency",
         required=False,
